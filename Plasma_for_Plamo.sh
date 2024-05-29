@@ -1,7 +1,7 @@
 #!/bin/bash
 
-VERS=5.27.10
-SITE=https://download.kde.org/stable/plasma/5.27.10/
+VERS=5.27.11
+SITE=https://download.kde.org/stable/plasma/5.27.11/
 
 while read -r col1 col2 _; do
         if [[ "${col1:0:1}" != "#" ]]; then
