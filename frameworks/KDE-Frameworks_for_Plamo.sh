@@ -1,8 +1,8 @@
 #!/bin/bash
 
-VERS=5.115.0
-SITE=https://download.kde.org/stable/frameworks/5.115/
-SITE2=https://download.kde.org/stable/frameworks/5.115/portingAids/
+VERS=6.9.0
+SITE=https://download.kde.org/stable/frameworks/${VERS%.0}/
+SITE2=https://download.kde.org/stable/frameworks/${VERS%.0}/portingAids/
 
 while read -r col1 col2 _; do
         if [[ "${col1:0:1}" != "#" ]]; then
