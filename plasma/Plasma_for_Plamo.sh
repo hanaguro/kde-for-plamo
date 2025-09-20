@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERS=6.3.2
+VERS=6.4.5
 SITE=https://download.kde.org/stable/plasma/$VERS/
 
 while read -r col1 col2 _; do
