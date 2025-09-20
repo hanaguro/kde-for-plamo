@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERS=6.11.0
+VERS=6.18.0
 SITE=https://download.kde.org/stable/frameworks/${VERS%.0}/
 SITE2=https://download.kde.org/stable/frameworks/${VERS%.0}/portingAids/
 
