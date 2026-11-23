@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERS=6.4.5
+VERS=6.8.3
 SITE=https://download.kde.org/stable/plasma/$VERS/
 
 while read -r col1 col2 _; do
@@ -14,10 +14,15 @@ set -e
 for i in "${array[@]}"
 do
         basename=$(echo "$i" | sed "s/-${VERS}.*//")
-        if [ -d $basename ]; then
-                continue
-        fi
-        mkdir ${basename}
+	basename=$(echo "${basename}" | sed "s/-/_/g")
+	if [ -f /var/log/packages/$basename ]; then
+		pkg_ver=$(grep "PACKAGE NAME:" /var/log/packages/${basename} | awk -F' ' '{ print $3 }'| awk -F'-' '{ print $2 }')
+		if [[ "$VERS" == "$pkg_ver" ]] || printf '%s\n%s\n' "$VERS" "$pkg_ver" | sort -V -C; then
+			continue
+		fi
+	fi
+
+        mkdir -p ${basename}
         cd ${basename}
         wget ${SITE}$i
         tar xvf $i

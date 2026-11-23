@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERS=6.18.0
+VERS=6.32.0
 SITE=https://download.kde.org/stable/frameworks/${VERS%.0}/
 SITE2=https://download.kde.org/stable/frameworks/${VERS%.0}/portingAids/
 
@@ -13,10 +13,18 @@ done < frameworks-${VERS}.md5
 for i in "${array[@]}"
 do
         basename=$(echo "$i" | sed "s/-${VERS}.*//")
-        if [ -d $basename ]; then
-                continue
-        fi
-        mkdir ${basename}
+	basename=$(echo "${basename}" | sed "s/-/_/g")
+	echo "install $VERS"
+	if [ -f /var/log/packages/$basename ]; then
+		pkg_ver=$(grep "PACKAGE NAME:" /var/log/packages/${basename} | awk -F' ' '{ print $3 }'| awk -F'-' '{ print $2 }')
+		echo "allready installed $pkg_ver"
+		if [[ "$VERS" == "$pkg_ver" ]] || printf '%s\n%s\n' "$VERS" "$pkg_ver" | sort -V -C; then
+			echo "skip build $basename"
+			continue
+		fi
+	fi
+		
+        mkdir -p ${basename}
         cd ${basename}
         wget ${SITE}$i
         if [ $? -ne 0 ]; then
