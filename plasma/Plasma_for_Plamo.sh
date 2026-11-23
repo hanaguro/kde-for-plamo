@@ -27,7 +27,7 @@ do
         wget ${SITE}$i
         tar xvf $i
         version=$(echo "$i" | sed 's/\(.*\)\.tar\.xz/\1/')
-        make_PlamoBuild.py ${version} -u ${SITE}$i
+        yes | make_PlamoBuild.py ${version} -u ${SITE}$i
         sed -i 's/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release"/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_LIBDIR=lib -DBUILD_QT5=OFF -DBUILD_TESTING=OFF"/' PlamoBuild.${version}
         ./PlamoBuild.${version}
         updatepkg -f *.tzst

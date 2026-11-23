@@ -36,7 +36,7 @@ do
         set -e
         tar xvf $i
         version=$(echo "$i" | sed 's/\(.*\)\.tar\.xz/\1/')
-        make_PlamoBuild.py ${version} -u ${SITE}$i
+        yes | make_PlamoBuild.py ${version} -u ${SITE}$i
 	if [ ${basename} == "kimageformats" ];then
         	sed -i 's/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release"/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_LIBDIR=lib -DCMAKE_SKIP_INSTALL_RPATH=ON -DBUILD_TESTING=OFF -DKIMAGEFORMATS_HEIF=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_CXX_STANDARD=20"/' PlamoBuild.${version}
 	else
