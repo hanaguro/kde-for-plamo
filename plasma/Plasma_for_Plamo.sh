@@ -24,11 +24,15 @@ do
 
         mkdir -p ${basename}
         cd ${basename}
-        wget ${SITE}$i
+        wget -N ${SITE}$i
         tar xvf $i
         version=$(echo "$i" | sed 's/\(.*\)\.tar\.xz/\1/')
         yes | make_PlamoBuild.py ${version} -u ${SITE}$i
-        sed -i 's/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release"/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_LIBDIR=lib -DBUILD_QT5=OFF -DBUILD_TESTING=OFF"/' PlamoBuild.${version}
+	if [ $basename == "plasma_workspace" ]; then
+	        sed -i 's/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release"/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_LIBDIR=lib -DBUILD_QT5=OFF -DBUILD_TESTING=OFF -DBUILD_GEOTIMEZONED=OFF"/' PlamoBuild.${version}
+	else
+	        sed -i 's/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release"/OPT_CONFIG="-DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_LIBDIR=lib -DBUILD_QT5=OFF -DBUILD_TESTING=OFF"/' PlamoBuild.${version}
+	fi
         ./PlamoBuild.${version}
         updatepkg -f *.tzst
         mv *.tzst ..

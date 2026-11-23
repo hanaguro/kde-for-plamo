@@ -26,7 +26,7 @@ do
 		
         mkdir -p ${basename}
         cd ${basename}
-        wget ${SITE}$i
+        wget -N ${SITE}$i
         if [ $? -ne 0 ]; then
                 wget ${SITE2}$i
                 if [ $? -ne 0 ]; then
